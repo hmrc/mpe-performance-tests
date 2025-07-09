@@ -39,12 +39,12 @@ sbt -Dperftest.runSmokeTest=true -DrunLocal=true gatling:test
 Run full performance test (locally) as follows:
 
 ```bash
-sbt -DrunLocal=true gatling:test
-```
+sbt -DrunLocal=true gatling:test[mpe-smoke-test.sh](mpe-smoke-test.sh)
+```[mpe-smoke-test.sh](mpe-smoke-test.sh)
 
 Run smoke test (staging) as follows:
 
-```bash
+```bash[mpe-smoke-test.sh](mpe-smoke-test.sh)
 sbt -Dperftest.runSmokeTest=true -DrunLocal=false gatling:test
 ```
 
