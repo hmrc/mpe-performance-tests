@@ -23,8 +23,8 @@ class MPESimulation extends PerformanceTestRunner {
 
 //  setup("home-page", "Home Page") withRequests navigateToHomePage
 
-  setup("members-protection-enhancement-journey",
-    "Check Manage Pension Scheme Protected Allowance") withRequests(
+  setup("members-protection-enhancement-journey-results-page",
+    "Check Manage Pension Scheme Protected Allowance for valid member look up") withRequests(
     getLogin,
     postLogin,
     getStartPage,
@@ -38,5 +38,22 @@ class MPESimulation extends PerformanceTestRunner {
     postMemberPSACheckRefPage,
     getCYAPage,
     getResultsPage)
+
+  setup("members-protection-enhancement-journey-no-results-page",
+    "Check Manage Pension Scheme Protected Allowance for No match") withRequests(
+    getLogin,
+    postLogin,
+    getStartPage,
+    getMemberDetailsPage,
+    postMemberDetailsPage,
+    getMemberDOBPage,
+    postMemberDOBPage,
+    getMemberNINOPage,
+    postMemberNINONoResultsPage,
+    getMemberPSACheckRefPage,
+    postMemberPSACheckRefPage,
+    getCYAPage,
+    getNoResultsPage)
+
   runSimulation()
 }
