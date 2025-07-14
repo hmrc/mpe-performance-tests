@@ -52,6 +52,8 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val noResultsPageUrl: String = baseurl + "//members-protections-and-enhancements/no-results"
 
+  val defaultErrorPageUrl: String = baseurl + "//members-protections-and-enhancements/no-results"
+
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
   def saveCsrfToken(): CheckBuilder[RegexCheckType, String, String] = regex(_ => CsrfPattern).saveAs("csrfToken")
@@ -178,6 +180,14 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("nino", "EC 13 05 89 A")
+      .check(status.is(303))
+  }
+
+  def postMemberNINODefaultErrorPage: HttpRequestBuilder = {
+    http("Post to Member NINO Page")
+      .post(memberNINOPageUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("nino", "AA 50 05 00 A")
       .check(status.is(303))
   }
 

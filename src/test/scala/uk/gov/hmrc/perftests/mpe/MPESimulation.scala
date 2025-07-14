@@ -55,5 +55,21 @@ class MPESimulation extends PerformanceTestRunner {
     getCYAPage,
     getNoResultsPage)
 
+  setup("members-protection-enhancement-journey-default-error-page",
+    "Check Manage Pension Scheme Protected Allowance for Default Error Page") withRequests(
+    getLogin,
+    postLogin,
+    getStartPage,
+    getMemberDetailsPage,
+    postMemberDetailsPage,
+    getMemberDOBPage,
+    postMemberDOBPage,
+    getMemberNINOPage,
+    postMemberNINODefaultErrorPage,
+    getMemberPSACheckRefPage,
+    postMemberPSACheckRefPage,
+    getCYAPage,
+    getResultsPage)
+
   runSimulation()
 }
