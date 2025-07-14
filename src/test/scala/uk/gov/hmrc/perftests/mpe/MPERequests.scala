@@ -223,4 +223,10 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
       .get(noResultsPageUrl)
       .check(status.is(200))
   }
+
+  def getDefaultErrorPage: HttpRequestBuilder = {
+    http("Get Results Page")
+      .get(noResultsPageUrl)
+      .check(status.is(200))
+  }
 }

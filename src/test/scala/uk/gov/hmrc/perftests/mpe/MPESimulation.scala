@@ -21,8 +21,6 @@ import uk.gov.hmrc.perftests.mpe.MPERequests.{getMemberDOBPage, getMemberDetails
 
 class MPESimulation extends PerformanceTestRunner {
 
-//  setup("home-page", "Home Page") withRequests navigateToHomePage
-
   setup("members-protection-enhancement-journey-results-page",
     "Check Manage Pension Scheme Protected Allowance for valid member look up") withRequests(
     getLogin,
@@ -69,7 +67,7 @@ class MPESimulation extends PerformanceTestRunner {
     getMemberPSACheckRefPage,
     postMemberPSACheckRefPage,
     getCYAPage,
-    getResultsPage)
+    getDefaultErrorPage)
 
   runSimulation()
 }
