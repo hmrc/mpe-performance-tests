@@ -23,9 +23,6 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.{HttpConfiguration, ServicesConfiguration}
 
-import scala.concurrent.duration._
-import scala.util.Random
-
 object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val baseurl: String = baseUrlFor("base-url")
@@ -51,7 +48,11 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val cyaPageUrl: String = baseurl + "//members-protections-and-enhancements/check-your-answers"
 
-  val resultsPageUrl: String = baseurl + "//members-protections-and-enhancements//results"
+  val resultsPageUrl: String = baseurl + "//members-protections-and-enhancements/results"
+
+  val noResultsPageUrl: String = baseurl + "//members-protections-and-enhancements/no-results"
+
+  val defaultErrorPageUrl: String = baseurl + "//members-protections-and-enhancements/no-results"
 
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
@@ -174,6 +175,22 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
       .check(status.is(303))
   }
 
+  def postMemberNINONoResultsPage: HttpRequestBuilder = {
+    http("Post to Member NINO Page")
+      .post(memberNINOPageUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("nino", "EC 13 05 89 A")
+      .check(status.is(303))
+  }
+
+  def postMemberNINODefaultErrorPage: HttpRequestBuilder = {
+    http("Post to Member NINO Page")
+      .post(memberNINOPageUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("nino", "AA 50 05 00 A")
+      .check(status.is(303))
+  }
+
   def getMemberPSACheckRefPage: HttpRequestBuilder = {
     http("Get Members PSA Check Ref Page")
       .get(memberPSACheckRefPageUrl)
@@ -198,6 +215,18 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def getResultsPage: HttpRequestBuilder = {
     http("Get Results Page")
       .get(resultsPageUrl)
+      .check(status.is(200))
+  }
+
+  def getNoResultsPage: HttpRequestBuilder = {
+    http("Get Results Page")
+      .get(noResultsPageUrl)
+      .check(status.is(200))
+  }
+
+  def getDefaultErrorPage: HttpRequestBuilder = {
+    http("Get Results Page")
+      .get(noResultsPageUrl)
       .check(status.is(200))
   }
 }
