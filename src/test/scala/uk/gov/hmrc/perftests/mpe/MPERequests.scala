@@ -18,25 +18,26 @@ package uk.gov.hmrc.perftests.mpe
 
 import io.gatling.core.Predef._
 import io.gatling.core.check.CheckBuilder
-import io.gatling.core.check.regex.RegexCheckType
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.{HttpConfiguration, ServicesConfiguration}
+import io.gatling.core.check.css.CssCheckType
+import jodd.lagarto.dom.NodeSelector
+
 
 object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val baseurl: String = baseUrlFor("base-url")
-  val route: String = "members-protection-enhancement"
-  val mpeFrontendRoot: String = baseUrlFor("members-protection-enhancement-frontend")
+
+  val route: String = "members-protections-and-enhancements"
 
   val authLoginstubRoot: String = baseUrlFor("auth-login-stub")
 
-  //Login URL For Staging
   val loginUrl: String = authLoginstubRoot + "/auth-login-stub/gg-sign-in?continue=/members-protections-and-enhancements"
 
   val dashboardUrl: String = baseurl + "/members-protections-and-enhancements/dashboard"
 
-  val startPageUrl: String = baseurl + "/members-protections-and-enhancements/"
+  val startPageUrl: String = baseurl + "//members-protections-and-enhancements/start"
 
   val memberDetailsPageUrl: String = baseurl + "//members-protections-and-enhancements/members-name"
 
@@ -56,20 +57,22 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
-  def saveCsrfToken(): CheckBuilder[RegexCheckType, String, String] = regex(_ => CsrfPattern).saveAs("csrfToken")
+  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector, String] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
   def getLogin: HttpRequestBuilder = {
     http("get Login Details")
       .get(loginUrl)
       .check(status.is(200))
+      .check(saveCsrfToken)
   }
 
   def postLogin: HttpRequestBuilder = {
     http("Post Login Details")
       .post(loginUrl)
+      .formParam("csrfToken", "${csrfToken}")
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
-      .formParam("redirectionUrl", "/members-protections-and-enhancements/dashboard")
+      .formParam("redirectionUrl", startPageUrl)
       .formParam("credentialStrength", "strong")
       .formParam("confidenceLevel", "50")
       .formParam("affinityGroup", "Agent")
@@ -124,14 +127,14 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Get Start Page")
       .get(startPageUrl)
       .check(status.is(200))
-//      .check(saveCsrfToken())
+      .check(saveCsrfToken)
   }
 
   def getMemberDetailsPage: HttpRequestBuilder = {
     http("Get Members Details Page")
       .get(memberDetailsPageUrl)
       .check(status.is(200))
-      .check(saveCsrfToken())
+      .check(saveCsrfToken)
   }
 
   def postMemberDetailsPage: HttpRequestBuilder = {
@@ -147,7 +150,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Get Members DOB Page")
       .get(memberDOBPageUrl)
       .check(status.is(200))
-      .check(saveCsrfToken())
+      .check(saveCsrfToken)
   }
 
   def postMemberDOBPage: HttpRequestBuilder = {
@@ -164,7 +167,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Get Members NINO Page")
       .get(memberNINOPageUrl)
       .check(status.is(200))
-      .check(saveCsrfToken())
+      .check(saveCsrfToken)
   }
 
   def postMemberNINOPage: HttpRequestBuilder = {
@@ -195,7 +198,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Get Members PSA Check Ref Page")
       .get(memberPSACheckRefPageUrl)
       .check(status.is(200))
-      .check(saveCsrfToken())
+      .check(saveCsrfToken)
   }
 
   def postMemberPSACheckRefPage: HttpRequestBuilder = {
