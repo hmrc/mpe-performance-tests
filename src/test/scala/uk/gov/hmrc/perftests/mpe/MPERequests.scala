@@ -57,7 +57,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
-  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector, String] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
+  def saveCsrfToken: CheckBuilder.Final[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
   def getLogin: HttpRequestBuilder = {
     http("get Login Details")
@@ -69,7 +69,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postLogin: HttpRequestBuilder = {
     http("Post Login Details")
       .post(loginUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
       .formParam("redirectionUrl", startPageUrl)
