@@ -69,7 +69,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postLogin: HttpRequestBuilder = {
     http("Post Login Details")
       .post(loginUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
       .formParam("redirectionUrl", startPageUrl)
