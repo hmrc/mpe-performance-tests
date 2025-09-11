@@ -57,7 +57,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
-  def saveCsrfToken: CheckBuilder.Final[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
+  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
   def getLogin: HttpRequestBuilder = {
     http("get Login Details")
@@ -140,7 +140,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postMemberDetailsPage: HttpRequestBuilder = {
     http("Post to Member-Details Page")
       .post(memberDetailsPageUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("firstName", "Pearl Turner")
       .formParam("lastName", "Harvey")
       .check(status.is(303))
@@ -156,7 +156,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postMemberDOBPage: HttpRequestBuilder = {
     http("Post to Member DOB Page")
       .post(memberDOBPageUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("dateOfBirth.day", "27")
       .formParam("dateOfBirth.month", "03")
       .formParam("dateOfBirth.year", "2007")
@@ -173,7 +173,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postMemberNINOPage: HttpRequestBuilder = {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("nino", "NW 99 99 99 C")
       .check(status.is(303))
   }
@@ -181,7 +181,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postMemberNINONoResultsPage: HttpRequestBuilder = {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("nino", "EC 13 05 89 A")
       .check(status.is(303))
   }
@@ -189,7 +189,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postMemberNINODefaultErrorPage: HttpRequestBuilder = {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("nino", "AA 50 05 00 A")
       .check(status.is(303))
   }
@@ -204,7 +204,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   def postMemberPSACheckRefPage: HttpRequestBuilder = {
     http("Post to Member PSA Check Ref Page")
       .post(memberPSACheckRefPageUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("psaCheckRef", "PSA 12 34 56 78 W")
       .check(status.is(303))
   }
