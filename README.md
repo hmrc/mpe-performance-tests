@@ -1,24 +1,24 @@
-# Members Protect and Enhancement Performance tests.
+MPE Performance Tests Link: https://github.com/hmrc/mpe-performance-tests
 
-# Smoke test
-It might be useful to try the journey with one user to check that everything works fine before running the full performance test
-./mpe-smoke-test.sh
+Performance test suite for the Members Protection's and Enhancements, using performance-test-runner under the hood.
 
-# Run the performance test
-./mpe-performance-test.sh
+1. Services to run (for local testing)
+   Start the docker desktop application (and make sure the mongodb is running on the docker) Start MPE services as follows: sm2 --start MPE_ALL To enable test only endpoint for local testing.
 
-To run a full performance test against staging environment, implement a job builder and run the test only from Jenkins.
+2. To run smoke tests
+   Run below command in terminal: sbt -Dperftest.runSmokeTest=true -DrunLocal=true "Gatling / test"
 
-# Scalafmt
-This repository uses Scalafmt, a code formatter for Scala. The formatting rules configured for this repository are defined within .scalafmt.conf.
+3. To run full tests
+   Run below command in terminal: sbt -DrunLocal=true "Gatling / test"
 
-To apply formatting to this repository using the configured rules in .scalafmt.conf execute:
+3. To run full tests in staging
+   Go to Jenkins Performance Tests Job on Staging Click on 'Build with parameters' Enter branch name (leave blank if the tests needs to run from the main branch) Set below parameters: Load: 100 ramp_up: 1 constant_rate: 8 Then click 'Build'
 
-sbt scalafmtAll
-To check files have been formatted as expected execute:
+5. Logging
+   The default log level for all HTTP requests is set to WARN. Configure logback.xml to update this if required.
 
-sbt scalafmtCheckAll scalafmtSbtCheck
-Visit the official Scalafmt documentation to view a complete list of tasks which can be run.
+6. WARNING
+   Do NOT run a full performance test against staging from your local machine. Please implement a new performance test job and execute your job from the dashboard in Performance Jenkins.
 
-# Logging
-The template uses logback.xml to configure log levels. The default log level is WARN. This can be updated to use a lower level for example TRACE to view the requests sent and responses received during the test.
+7. License
+   This code is open source software licensed under the Apache 2.0 License.
