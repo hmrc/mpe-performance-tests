@@ -1,4 +1,4 @@
-Alcohol Duty Performance Tests Link: https://github.com/hmrc/mpe-performance-tests
+MPE Performance Tests Link: https://github.com/hmrc/mpe-performance-tests
 
 Performance test suite for the Members Protection's and Enhancements, using performance-test-runner under the hood.
 
