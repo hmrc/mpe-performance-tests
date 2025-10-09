@@ -141,8 +141,8 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member-Details Page")
       .post(memberDetailsPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("firstName", "Pearl Turner")
-      .formParam("lastName", "Harvey")
+      .formParam("firstName", "Pearl")
+      .formParam("lastName", "Brown")
       .check(status.is(303))
   }
 
@@ -157,9 +157,9 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member DOB Page")
       .post(memberDOBPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("dateOfBirth.day", "27")
-      .formParam("dateOfBirth.month", "03")
-      .formParam("dateOfBirth.year", "2007")
+      .formParam("dateOfBirth.day", "2")
+      .formParam("dateOfBirth.month", "12")
+      .formParam("dateOfBirth.year", "1939")
       .check(status.is(303))
   }
 
@@ -174,7 +174,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "NW 99 99 99 C")
+      .formParam("nino", "NW 99 99 99 A")
       .check(status.is(303))
   }
 
@@ -190,7 +190,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "AA 50 05 00 A")
+      .formParam("nino", "ES 50 05 00 A")
       .check(status.is(303))
   }
 
@@ -205,7 +205,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member PSA Check Ref Page")
       .post(memberPSACheckRefPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("psaCheckRef", "PSA 12 34 56 78 W")
+      .formParam("psaCheckRef", "PSA 67 81 23 45 W")
       .check(status.is(303))
   }
 
@@ -213,6 +213,13 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Get Check Your Answers Page")
       .get(cyaPageUrl)
       .check(status.is(200))
+  }
+
+  def postCYAPage: HttpRequestBuilder = {
+    http("Post Check Your Answers Page")
+      .post(cyaPageUrl)
+      .formParam("csrfToken", "#{csrfToken}")
+      .check(status.is(303))
   }
 
   def getResultsPage: HttpRequestBuilder = {
@@ -228,8 +235,8 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   }
 
   def getDefaultErrorPage: HttpRequestBuilder = {
-    http("Get Results Page")
-      .get(noResultsPageUrl)
+    http("Get Default Error Page")
+      .get(defaultErrorPageUrl)
       .check(status.is(200))
   }
 }
