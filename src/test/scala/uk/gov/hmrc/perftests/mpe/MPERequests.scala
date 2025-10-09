@@ -141,8 +141,8 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member-Details Page")
       .post(memberDetailsPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("firstName", "Pearl Turner")
-      .formParam("lastName", "Harvey")
+      .formParam("firstName", "John")
+      .formParam("lastName", "Smith")
       .check(status.is(303))
   }
 
@@ -157,9 +157,9 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member DOB Page")
       .post(memberDOBPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("dateOfBirth.day", "27")
-      .formParam("dateOfBirth.month", "03")
-      .formParam("dateOfBirth.year", "2007")
+      .formParam("dateOfBirth.day", "10")
+      .formParam("dateOfBirth.month", "09")
+      .formParam("dateOfBirth.year", "1954")
       .check(status.is(303))
   }
 
@@ -174,7 +174,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "NW 99 99 99 C")
+      .formParam("nino", "JX 99 99 99 A")
       .check(status.is(303))
   }
 
@@ -182,7 +182,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "EC 13 05 89 A")
+      .formParam("nino", "ER 40 44 04 A")
       .check(status.is(303))
   }
 
@@ -190,7 +190,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "AA 50 05 00 A")
+      .formParam("nino", "ER 40 04 00 A")
       .check(status.is(303))
   }
 
