@@ -20,9 +20,10 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.mpe.MPERequests.{getMemberDOBPage, getMemberDetailsPage, getMemberNINOPage, getMemberPSACheckRefPage, _}
 
 class MPESimulation extends PerformanceTestRunner {
-
-  setup("members-protection-enhancement-journey-results-page",
-    "Check Manage Pension Scheme Protected Allowance for valid member look up") withRequests(
+  setup(
+    id = "members-protection-enhancement-journey-results-page",
+    description = "Check for valid member look up"
+  ).withRequests(
     getLogin,
     postLogin,
     getStartPage,
@@ -35,10 +36,14 @@ class MPESimulation extends PerformanceTestRunner {
     getMemberPSACheckRefPage,
     postMemberPSACheckRefPage,
     getCYAPage,
-    getResultsPage)
+    postCYAPage,
+    getResultsPage
+  )
 
-  setup("members-protection-enhancement-journey-no-results-page",
-    "Check Manage Pension Scheme Protected Allowance for No match") withRequests(
+  setup(
+    id = "members-protection-enhancement-journey-no-results-page",
+    description = "Check for No match"
+  ).withRequests(
     getLogin,
     postLogin,
     getStartPage,
@@ -51,10 +56,14 @@ class MPESimulation extends PerformanceTestRunner {
     getMemberPSACheckRefPage,
     postMemberPSACheckRefPage,
     getCYAPage,
-    getNoResultsPage)
+    postCYAPage,
+    getNoResultsPage
+  )
 
-  setup("members-protection-enhancement-journey-default-error-page",
-    "Check Manage Pension Scheme Protected Allowance for Default Error Page") withRequests(
+  setup(
+    id = "members-protection-enhancement-journey-default-error-page",
+    description = "Check for Default Error Page"
+  ).withRequests(
     getLogin,
     postLogin,
     getStartPage,
@@ -67,7 +76,8 @@ class MPESimulation extends PerformanceTestRunner {
     getMemberPSACheckRefPage,
     postMemberPSACheckRefPage,
     getCYAPage,
-    getDefaultErrorPage)
+    getDefaultErrorPage
+  )
 
   runSimulation()
 }
