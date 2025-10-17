@@ -13,6 +13,6 @@ lazy val root = (project in file("."))
     Test / parallelExecution := false,
     Test / testOptions := Seq.empty,
     libraryDependencies ++= Seq(
-      "uk.gov.hmrc" %% "performance-test-runner" % "6.2.0"
+      "uk.gov.hmrc" %% "performance-test-runner" % "6.3.0"
     ).map(_ % Test)
   )
