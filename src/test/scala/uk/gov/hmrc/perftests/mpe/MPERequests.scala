@@ -24,6 +24,8 @@ import uk.gov.hmrc.performance.conf.{HttpConfiguration, ServicesConfiguration}
 import io.gatling.core.check.css.CssCheckType
 import jodd.lagarto.dom.NodeSelector
 
+import scala.util.Random
+
 
 object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
@@ -58,6 +60,18 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
   def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
+
+  def generateNino(prefix: String = ""): String = {
+    val num = Random.nextInt(1000000)
+    val suffix = "A"
+    f"$prefix$num%06d$suffix"
+  }
+
+  val testNinoResultsPage: String =  generateNino("NW")
+
+  val testNinoNoResultsPage: String =  generateNino("EC")
+
+  val testNinoDefaultErrorPage: String =  generateNino("ES")
 
   def getLogin: HttpRequestBuilder = {
     http("get Login Details")
@@ -174,7 +188,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "NW 99 99 99 A")
+      .formParam("nino", testNinoResultsPage)
       .check(status.is(303))
   }
 
@@ -182,7 +196,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "EC 13 05 89 A")
+      .formParam("nino", testNinoNoResultsPage)
       .check(status.is(303))
   }
 
@@ -190,7 +204,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member NINO Page")
       .post(memberNINOPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nino", "ES 50 05 00 A")
+      .formParam("nino", testNinoDefaultErrorPage)
       .check(status.is(303))
   }
 
