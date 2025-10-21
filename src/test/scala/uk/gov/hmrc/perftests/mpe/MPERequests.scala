@@ -61,17 +61,27 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
-  def generateNino(prefix: String = ""): String = {
+  def generateNino(prefix: String = "AA"): String = {
     val num = Random.nextInt(1000000)
-    val suffix = "A"
-    f"$prefix$num%06d$suffix"
+    val suffix = "C"
+    val str: String = Random.alphanumeric.filter(_.isLetter).take(2).map(_.toUpper).mkString
+
+    prefix + f"$str$num%06d$suffix".drop(prefix.length)
   }
 
-  val testNinoResultsPage: String =  generateNino("NW")
+  val testNinoResultsPage: String =  generateNino("NW9")
 
-  val testNinoNoResultsPage: String =  generateNino("EC")
+  val testNinoNoResultsPage: String =  generateNino("EC1")
 
-  val testNinoDefaultErrorPage: String =  generateNino("ES")
+  val testNinoDefaultErrorPage: String =  generateNino("ES50")
+
+  def generateCheckRef(prefix: String = "PSA123"): String = {
+    val num = Random.nextInt(100000000)
+    val str: Char = Random.alphanumeric.filter(_.isLetter).head.toUpper
+    prefix + f"PSA$num%08d$str".drop(prefix.length)
+  }
+
+  val psaCheckRef: String = generateCheckRef()
 
   def getLogin: HttpRequestBuilder = {
     http("get Login Details")
@@ -219,11 +229,13 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member PSA Check Ref Page")
       .post(memberPSACheckRefPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("psaCheckRef", "PSA 67 81 23 45 W")
+      .formParam("psaCheckRef", psaCheckRef)
       .check(status.is(303))
   }
 
   def getCYAPage: HttpRequestBuilder = {
+    println(testNinoResultsPage)
+    println(psaCheckRef)
     http("Get Check Your Answers Page")
       .get(cyaPageUrl)
       .check(status.is(200))
