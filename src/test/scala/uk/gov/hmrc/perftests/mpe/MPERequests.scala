@@ -75,7 +75,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val testNinoDefaultErrorPage: String =  generateNino("ES50")
 
-  def generateCheckRef(prefix: String = "PSA123"): String = {
+  def generateCheckRef(prefix: String = "PSA678"): String = {
     val num = Random.nextInt(100000000)
     val str: Char = Random.alphanumeric.filter(_.isLetter).head.toUpper
     prefix + f"PSA$num%08d$str".drop(prefix.length)
@@ -165,8 +165,8 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
     http("Post to Member-Details Page")
       .post(memberDetailsPageUrl)
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("firstName", "Pearl")
-      .formParam("lastName", "Brown")
+      .formParam("firstName", "Pfirstnamel")
+      .formParam("lastName", "Blastnamen")
       .check(status.is(303))
   }
 
