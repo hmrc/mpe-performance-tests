@@ -63,7 +63,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   def generateNino(prefix: String = "AA"): String = {
     val num = Random.nextInt(1000000)
-    val suffix = "C"
+    val suffix = "A"
     val str: String = Random.alphanumeric.filter(_.isLetter).take(2).map(_.toUpper).mkString
 
     prefix + f"$str$num%06d$suffix".drop(prefix.length)
@@ -234,8 +234,6 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
   }
 
   def getCYAPage: HttpRequestBuilder = {
-    println(testNinoResultsPage)
-    println(psaCheckRef)
     http("Get Check Your Answers Page")
       .get(cyaPageUrl)
       .check(status.is(200))
