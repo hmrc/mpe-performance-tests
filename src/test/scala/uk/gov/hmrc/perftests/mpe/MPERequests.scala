@@ -55,7 +55,7 @@ object MPERequests extends HttpConfiguration with ServicesConfiguration {
 
   val noResultsPageUrl: String = baseurl + "//members-protections-and-enhancements/no-results"
 
-  val defaultErrorPageUrl: String = baseurl + "//members-protections-and-enhancements/no-results"
+  val defaultErrorPageUrl: String = baseurl + "//members-protections-and-enhancements/problem-with-service"
 
   val CsrfPattern = """<input type="hidden" name="csrfToken" value="([^"]+)""""
 
