@@ -1,24 +1,32 @@
-MPE Performance Tests Link: https://github.com/hmrc/mpe-performance-tests
+# mpe-performance-tests (members protection enhancements)
 
-Performance test suite for the Members Protection's and Enhancements, using performance-test-runner under the hood.
+## Overview
+Performance tests for the members-protection-enhancements-frontend service
 
-1. Services to run (for local testing)
-   Start the docker desktop application (and make sure the mongodb is running on the docker) Start MPE services as follows: sm2 --start MPE_ALL To enable test only endpoint for local testing.
+## Running the services
 
-2. To run smoke tests
-   Run below command in terminal: sbt -Dperftest.runSmokeTest=true -DrunLocal=true "Gatling / test"
+In order to have the right services started using service manager 2 you will need to use the following command:
+```
+sm2 --start MPE_ALL
+```
 
-3. To run full tests
-   Run below command in terminal: sbt -DrunLocal=true "Gatling / test"
+## Smoke test
 
-3. To run full tests in staging
-   Go to Jenkins Performance Tests Job on Staging Click on 'Build with parameters' Enter branch name (leave blank if the tests needs to run from the main branch) Set below parameters: Load: 100 ramp_up: 1 constant_rate: 8 Then click 'Build'
+It may be useful to try the journey with one user to check that everything works fine before running the full performance test
+To run the smoke test locally:
 
-5. Logging
-   The default log level for all HTTP requests is set to WARN. Configure logback.xml to update this if required.
+```
+./mpe-smoke-test.sh
+```
 
-6. WARNING
-   Do NOT run a full performance test against staging from your local machine. Please implement a new performance test job and execute your job from the dashboard in Performance Jenkins.
+## Full load test
 
-7. License
-   This code is open source software licensed under the Apache 2.0 License.
+To run the full load test locally:
+
+```
+./mpe-performance-test.sh
+```
+
+## Licence
+
+This code is open source software licensed under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
